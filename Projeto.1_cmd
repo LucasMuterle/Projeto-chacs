@@ -1,0 +1,153 @@
+import os
+os.system('cls')
+
+print( '=' * 61 )
+print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
+print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
+print( '||                                                         ||' )
+print( '|| Alunos: 22001646 - André Laudares Soares                ||' )
+print( '||         22007283 - Guilherme Ferreira Jorge             ||' )
+print( '||         20195509 - Lucas Muterle                        ||' )
+print( '||         22004817 - Matheus Ribeiro Marafon              ||' )
+print( '||         22005575 - Raul Migliari                        ||' )
+print( '=' * 61 )
+
+input('Press Enter to start')
+
+import os
+os.system('cls')
+
+'''Calculo do IMC'''
+pesoValido = False
+while not pesoValido:
+    try:
+        peso = float(
+            input('\nFavor, digite seu peso, em quilogramas (ex: 70.6): ')
+        )
+        pesoValido = True
+
+    except ValueError:
+        print('<<<ERRO: Valor inválido, use APENAS números>>>')
+
+alturaValida = False
+while not alturaValida:
+    try:
+        altura = float(
+            input('\nFavor, digite sua altura, em metros (ex: 1.70): ')
+        )
+        alturaValida = True
+
+    except ValueError:
+        print('<<<ERRO: Valor inválido, use APENAS números>>>')
+
+IMC = peso / ( altura ** 2 )
+
+import os
+os.system('cls')
+
+'''Relatorio do IMC e Classificação'''
+print( '=' * 58 )
+print(f'||                 Seu IMC é: {IMC:.2f}                     ||')
+if (IMC < 18.5):
+    print('||       Você foi classificado com Peso Baixo           ||')
+elif (18.5 < IMC <= 24.9):
+    print('||       Você foi classificado com Peso Normal          ||')
+elif (25 < IMC <= 29.9):
+    print('||        Você foi classificado com Sobrepeso           ||')
+elif (30 < IMC <= 34.9):
+    print('||    Você foi classificado com Obesidade (Grau 1)      ||')
+elif (35 < IMC <= 39.9):
+    print('||  Você foi classificado com Obesidade Severa (Grau 2) ||')
+elif (IMC >= 40):
+    print('|| Você foi classificado com Obesidade Mórbida (Grau 3) ||')
+print( '=' * 58 )
+input('\nPress enter to continue')
+
+import os
+os.system('cls')
+
+'''Calculo do gasto energetico para saber ate quanto a pessoa pode ingerir no dia'''
+sexo = input('Você é:\nHomem (H)\nMulher (M)\n[H/M]?: ').upper()
+
+while sexo != 'H' and sexo != 'M':
+    print('\n<<<ERRO: Sexo inválido, digite H ou M>>>\n')
+    sexo = input('Você é:\nHomem (H)\nMulher (M)\n[H/M]?: ').upper()
+
+idadeValida = False
+while not idadeValida:
+    try:
+        idade = int(
+            input('\nFavor, digite sua idade: ')
+        )
+        idadeValida = True
+
+    except ValueError:
+        print('<<<ERRO: Valor inválido, use APENAS números sem vírgula>>>')
+
+gasto1 = (58.317 * peso) - 31.1  # 0 a 3 Homem
+gasto2 = (59.512 * peso) - 30.4  # 0 a 3 Mulher
+gasto3 = (20.315 * peso) + 485.9  # 3 a 10 Homem
+gasto4 = (22.706 * peso) + 504.3  # 3 a 10 Mulher
+gasto5 = (13.384 * peso) + 692.6  # 10 a 18 Homem
+gasto6 = (17.686 * peso) + 658.2  # 10 a 18 Mulher
+gasto7 = (14.818 * peso) + 486.6  # 18 a 30 Homem
+gasto8 = (15.057 * peso) + 692.2  # 18 a 30 Mulher
+gasto9 = (8.126 * peso) + 845.6  # 30 a 60 Homem
+gasto10 = (11.472 * peso) + 873.1  # 30 a 60 Mulher
+gasto11 = (9.082 * peso) + 658.5  # 60+ Homem
+gasto12 = (11.711 * peso) + 587.7  # 60+ Mulher
+
+'''falta Codigo da ingestao de calorias ( Fazer uma tabela de valores para os alimentos e somar para saber o valor total )'''
+
+'''relatorio final do sistema geral'''
+import os
+os.system('cls')
+
+print( '=' * 58 )
+print(f'||                 Seu IMC é: {IMC:.2f}                     ||')
+if (IMC < 18.5):
+    print('||       Você foi classificado com Peso Baixo           ||')
+elif (18.5 < IMC <= 24.9):
+    print('||       Você foi classificado com Peso Normal          ||')
+elif (25 < IMC <= 29.9):
+    print('||        Você foi classificado com Sobrepeso           ||')
+elif (30 < IMC <= 34.9):
+    print('||    Você foi classificado com Obesidade (Grau 1)      ||')
+elif (35 < IMC <= 39.9):
+    print('||  Você foi classificado com Obesidade Severa (Grau 2) ||')
+elif (IMC >= 40):
+    print('|| Você foi classificado com Obesidade Mórbida (Grau 3) ||')
+
+'''Falta resultado da ingestao de calorais'''
+
+if (idade <= 3):
+    if sexo == 'H':
+        print(f'||    Seu gasto energético basal é {gasto1:.2f} calorias     ||')
+    else:
+        print(f'||    Seu gasto energético basal é {gasto2:.2f} calorias     ||')
+elif (3 < idade <= 10):
+    if sexo == 'H':
+        print(f'||    Seu gasto energético basal é {gasto3:.2f} calorias     ||')
+    else:
+        print(f'||    Seu gasto energético basal é {gasto4:.2f} calorias     ||')
+elif (10 < idade <= 18):
+    if sexo == 'H':
+        print(f'||    Seu gasto energético basal é {gasto5:.2f} calorias     ||')
+    else:
+        print(f'||    Seu gasto energético basal é {gasto6:.2f} calorias     ||')
+elif (18 < idade <= 30):
+    if sexo == 'H':
+        print(f'||    Seu gasto energético basal é {gasto7:.2f} calorias     ||')
+    else:
+        print(f'||    Seu gasto energético basal é {gasto8:.2f} calorias     ||')
+elif (30 < idade <= 60):
+    if sexo == 'H':
+        print(f'||    Seu gasto energético basal é {gasto9:.2f} calorias     ||')
+    else:
+        print(f'||    Seu gasto energético basal é {gasto10:.2f} calorias    ||')
+elif (idade > 60):
+    if sexo == 'H':
+        print(f'||    Seu gasto energético basal é {gasto11:.2f} calorias    ||')
+    else:
+        print(f'||    Seu gasto energético basal é {gasto12:.2f} calorias    ||')
+print( '=' * 58 )
