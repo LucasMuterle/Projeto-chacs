@@ -24,7 +24,10 @@ while not pesoValido:
         peso = float(
             input('\nFavor, digite seu peso, em quilogramas (ex: 70.6): ')
         )
-        pesoValido = True
+        if peso <= 0:
+                print('<<<ERRO: Valor inválido, use APENAS números positivos>>>')
+        else:
+            pesoValido = True
 
     except ValueError:
         print('<<<ERRO: Valor inválido, use APENAS números>>>')
@@ -35,7 +38,10 @@ while not alturaValida:
         altura = float(
             input('\nFavor, digite sua altura, em metros (ex: 1.70): ')
         )
-        alturaValida = True
+        if altura <= 0:
+                print('<<<ERRO: Valor inválido, use APENAS números positivos>>>')
+        else:
+            alturaValida = True
 
     except ValueError:
         print('<<<ERRO: Valor inválido, use APENAS números>>>')
@@ -47,19 +53,19 @@ os.system('cls')
 
 '''Relatorio do IMC e Classificação'''
 print( '=' * 58 )
-print(f'||                 Seu IMC é: {IMC:.2f}                     ||')
-if (IMC < 18.5):
-    print('||       Você foi classificado com Peso Baixo           ||')
-elif (18.5 < IMC <= 24.9):
-    print('||       Você foi classificado com Peso Normal          ||')
-elif (25 < IMC <= 29.9):
-    print('||        Você foi classificado com Sobrepeso           ||')
-elif (30 < IMC <= 34.9):
-    print('||    Você foi classificado com Obesidade (Grau 1)      ||')
-elif (35 < IMC <= 39.9):
-    print('||  Você foi classificado com Obesidade Severa (Grau 2) ||')
+print(f'||                 Seu IMC é: {IMC:.2f}')
+if (IMC < 18.5999):
+    print('||       Você foi classificado com Peso Baixo')
+elif (18.5999 < IMC <= 24.999):
+    print('||       Você foi classificado com Peso Normal')
+elif (25 < IMC <= 29.999):
+    print('||        Você foi classificado com Sobrepeso')
+elif (30 < IMC <= 34.999):
+    print('||    Você foi classificado com Obesidade (Grau 1) ')
+elif (35 < IMC <= 39.999):
+    print('||  Você foi classificado com Obesidade Severa (Grau 2)')
 elif (IMC >= 40):
-    print('|| Você foi classificado com Obesidade Mórbida (Grau 3) ||')
+    print('|| Você foi classificado com Obesidade Mórbida (Grau 3)')
 print( '=' * 58 )
 input('\nPress enter to continue')
 
@@ -79,7 +85,10 @@ while not idadeValida:
         idade = int(
             input('\nFavor, digite sua idade: ')
         )
-        idadeValida = True
+        if idade <= 0:
+                print('<<<ERRO: Valor inválido, use APENAS números positivos>>>')
+        else:
+            idadeValida = True
 
     except ValueError:
         print('<<<ERRO: Valor inválido, use APENAS números sem vírgula>>>')
@@ -97,57 +106,163 @@ gasto10 = (11.472 * peso) + 873.1  # 30 a 60 Mulher
 gasto11 = (9.082 * peso) + 658.5  # 60+ Homem
 gasto12 = (11.711 * peso) + 587.7  # 60+ Mulher
 
+
+'''Calculo do consumo de calorias que uma pessoa tem de acordo com as refeições (café da manhã, almoço, café da tarde, jantar)'''
+vetorRefeição = []
+ref = ['café da manhã','almoço','café da tarde','janta','ceia']
+refeição = 0
+while refeição < 5:
+    consumoValido = False
+    while not consumoValido:
+        try:
+            número = float(
+                input(f'\nFavor, digite seu consumo, em calorias, do(a) {ref[refeição]} (ex: 1234.56): ')
+            )
+            if número <= 0:
+                print('<<<ERRO: Valor inválido, use APENAS números positivos>>>')
+            else:
+                calorias = vetorRefeição.append(número)
+                refeição += 1
+                consumoValido = True
+        except ValueError:
+            print('<<<ERRO: Valor inválido, use APENAS números>>>')
+
 '''falta Codigo da ingestao de calorias ( Fazer uma tabela de valores para os alimentos e somar para saber o valor total )'''
 
-'''relatorio final do sistema geral'''
+'''Relatorio final do sistema geral'''
 import os
 os.system('cls')
 
-print( '=' * 58 )
-print(f'||                 Seu IMC é: {IMC:.2f}                     ||')
+'''Relatório do Cálculo de IMC'''
+print( '=' * 68 )
+print(f'||                      Seu IMC é: {IMC:.2f}')
 if (IMC < 18.5):
-    print('||       Você foi classificado com Peso Baixo           ||')
-elif (18.5 < IMC <= 24.9):
-    print('||       Você foi classificado com Peso Normal          ||')
-elif (25 < IMC <= 29.9):
-    print('||        Você foi classificado com Sobrepeso           ||')
-elif (30 < IMC <= 34.9):
-    print('||    Você foi classificado com Obesidade (Grau 1)      ||')
-elif (35 < IMC <= 39.9):
-    print('||  Você foi classificado com Obesidade Severa (Grau 2) ||')
+    print('||             Você foi classificado com Peso Baixo')
+elif (18.5 < IMC <= 24.99):
+    print('||             Você foi classificado com Peso Normal')
+elif (25 < IMC <= 29.99):
+    print('||              Você foi classificado com Sobrepeso')
+elif (30 < IMC <= 34.99):  
+    print('||          Você foi classificado com Obesidade (Grau 1)')
+elif (35 < IMC <= 39.99):
+    print('||        Você foi classificado com Obesidade Severa (Grau 2)')
 elif (IMC >= 40):
-    print('|| Você foi classificado com Obesidade Mórbida (Grau 3) ||')
+    print('||       Você foi classificado com Obesidade Mórbida (Grau 3)')
 
-'''Falta resultado da ingestao de calorais'''
-
+'''Relatório do Gasto energético basal'''
 if (idade <= 3):
     if sexo == 'H':
-        print(f'||    Seu gasto energético basal é {gasto1:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto1:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca1 = (gasto1 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca1:.2f} calorias')
+        if (diferenca1 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias ')
     else:
-        print(f'||    Seu gasto energético basal é {gasto2:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto2:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca2 = (gasto2 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca2:.2f} calorias')
+        if (diferenca2 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
 elif (3 < idade <= 10):
     if sexo == 'H':
-        print(f'||    Seu gasto energético basal é {gasto3:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto3:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca3 = (gasto3 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca3:.2f} calorias')
+        if (diferenca3 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
     else:
-        print(f'||    Seu gasto energético basal é {gasto4:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto4:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca4 = (gasto4 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca4:.2f} calorias')
+        if (diferenca4 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
 elif (10 < idade <= 18):
     if sexo == 'H':
-        print(f'||    Seu gasto energético basal é {gasto5:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto5:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca5 = (gasto5 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca5:.2f} calorias')
+        if (diferenca5 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
     else:
-        print(f'||    Seu gasto energético basal é {gasto6:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto6:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca6 = (gasto6 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca6:.2f} calorias')
+        if (diferenca6 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
 elif (18 < idade <= 30):
     if sexo == 'H':
-        print(f'||    Seu gasto energético basal é {gasto7:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto7:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca7 = (gasto7 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca7:.2f} calorias')
+        if (diferenca7 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
     else:
-        print(f'||    Seu gasto energético basal é {gasto8:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto8:.2f} calorias ')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca8 = (gasto8 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca8:.2f} calorias')
+        if (diferenca8 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
 elif (30 < idade <= 60):
     if sexo == 'H':
-        print(f'||    Seu gasto energético basal é {gasto9:.2f} calorias     ||')
+        print(f'||         Seu gasto energético basal é {gasto9:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca9 = (gasto9 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca9:.2f} calorias')
+        if (diferenca9 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
     else:
-        print(f'||    Seu gasto energético basal é {gasto10:.2f} calorias    ||')
+        print(f'||          Seu gasto energético basal é {gasto10:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca10 = (gasto10 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca10:.2f} calorias')
+        if (diferenca10 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||       Voce esta dentro do padrao de calorias necessarias')
 elif (idade > 60):
     if sexo == 'H':
-        print(f'||    Seu gasto energético basal é {gasto11:.2f} calorias    ||')
+        print(f'||         Seu gasto energético basal é {gasto11:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca11 = (gasto11 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca11:.2f} calorias')
+        if (diferenca11 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
     else:
-        print(f'||    Seu gasto energético basal é {gasto12:.2f} calorias    ||')
-print( '=' * 58 )
+        print(f'||         Seu gasto energético basal é {gasto12:.2f} calorias')
+        print(f'||        Seu consumo total de calorias é de {sum(vetorRefeição):.2f} calorias')
+        diferenca12 = (gasto12 - sum(vetorRefeição))
+        print(f'|| A diferença da ingestão com o gasto calorico é {diferenca12:.2f} calorias')
+        if (diferenca12 < 0):
+            print(f'||     Voce esta ingerindo mais calorias do que o necessario')
+        else:
+            print(f'||      Voce esta dentro do padrao de calorias necessarias')
+
+print( '=' * 68 )
