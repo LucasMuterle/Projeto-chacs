@@ -1,105 +1,65 @@
 '''
-Projeto Integrador I => Sistema completo
-
-Se não conseguir conectar ao meu banco de dados use "localhost" e crie a seguinte tabela
-
-CREATE TABLE dados_imc(
-    nome_dados varchar2(40),
-    idade_dados integer,
-    sexo_dados varchar(1),
-    peso_dados number,
-    altura_dados number,
-    imc_dados number,
-    gasto_dados number,
-    sum_dados number,
-    data_dados varchar2(10)
-);
+Projeto Integrador I => Calculadora de Gasto Energético Basal
 '''
+def valorSexo():
 
-import os
-import cx_Oracle
-from funcs.peso import *
-from funcs.imc import *
-from funcs.consumocal import *
-from funcs.gastobasal import *
-from funcs.funcprint import *
-from funcs.insertdb import *
-from funcs.selectdb import *
-from datetime import datetime
+        sexo = input('\nVocê é Homem (H) ou Mulher (M) [H/M]?: ').upper()
 
-os.system('cls')
+        while sexo != 'H' and sexo != 'M':
+                print('\n<<<ERRO: Sexo inválido, digite H ou M>>>\n')
+                sexo = input('\nVocê é Homem (H) ou Mulher (M) [H/M]?: ').upper()
 
-print( '=' * 61 )
-print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
-print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
-print( '||                                                         ||' )
-print( '|| Alunos: 22001646 - André Laudares Soares                ||' )
-print( '||         22007283 - Guilherme Ferreira Jorge             ||' )
-print( '||         20195509 - Lucas Muterle                        ||' )
-print( '||         22004817 - Matheus Ribeiro Marafon              ||' )
-print( '||         22005575 - Raul Migliari                        ||' )
-print( '=' * 61 )
+        return sexo
 
-input('\nPress Enter to start')
+def valorIdade():
 
-os.system('cls')
+        idadeValida = False
+        while not idadeValida:
+                try:
+                        idade = int(
+                                input('\nFavor, digite sua idade: ')
+                        )
+                        if idade <= 0:
+                                print('<<<ERRO: Valor inválido, use APENAS números positivos>>>')
+                        else:
+                                idadeValida = True
 
-def start():
-    print( '=' * 61 )
-    print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
-    print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
-    print( '||                                                         ||' )
-    print( '||             1 - Iniciar Pesquisa                        ||' )
-    print( '||             2 - Verificar Banco de Dados                ||' )
-    print( '||             3 - Sair                                    ||' )
-    print( '=' * 61 )
+                except ValueError:
+                        print('<<<ERRO: Valor inválido, use APENAS números sem vírgula>>>')
+                        
+        return idade
 
-    escolhaValido = False
-    while not escolhaValido:
-        try:
-            escolha = int(
-                input('\nFavor, digite a escolha: ')
-            )
-            if 0 < escolha > 3 :
-                print('<<<ERRO: Valor inválido>>>')
-            else:
-                escolhaValido = True
+def gastoEnergetico(p, idade, sexo):
 
-        except ValueError:
-            print('<<<ERRO: Valor inválido, use APENAS números>>>')
-    
-        
-    if escolha == 1:
-        os.system('cls')
-        nome = str(
-            input('Digite seu nome :\t')
-        )
-        vPeso = pesoValor()
-        vAltura = valorAltura()
-        vIMC = valorIMC(vPeso,vAltura)
-        vSexo = valorSexo()
-        vidade = valorIdade()
-        vGasto = gastoEnergetico(vPeso, vidade, vSexo)
-        os.system('cls')
-        vSum = somaRefeicao() 
-        os.system('cls')
-        vData = datetime.today().strftime('%Y-%m-%d')
-        funcPrint(vIMC, vGasto, vSum, nome)
-        insertDados(nome, vidade, vSexo, f'{vPeso:.2f}', f'{vAltura:.2f}', f'{vIMC:.2f}', f'{vGasto:.2f}', f'{vSum:.2f}', vData)
-        os.system('cls')
-        start()
-    
-    elif escolha == 2:
-        os.system('cls')
-        tabelaDB()
-        os.system('cls')
-        start()
+        if (idade <= 3):
+                if sexo == 'H':
+                        gasto = (58.317 * p) - 31.1
+                else:
+                        gasto = (59.512 * p) - 30.4
+        elif (3 < idade <= 10):
+                if sexo == 'H':
+                        gasto = (20.315 * p) + 485.9
+                else:
+                        gasto = (22.706 * p) + 504.3
+        elif (10 < idade <= 18):
+                if sexo == 'H':
+                        gasto = (13.384 * p) + 692.6
+                else:
+                        gasto = (17.686 * p) + 658.2
+        elif (18 < idade <= 30):
+                if sexo == 'H':
+                        gasto = (14.818 * p) + 486.6
+                else:
+                        gasto = (15.057 * p) + 692.2
+        elif (30 < idade <= 60):
+                if sexo == 'H':
+                        gasto = (8.126 * p) + 845.6
+                else:
+                        gasto = (11.472 * p) + 873.1
+        elif (idade > 60):
+                if sexo == 'H':
+                        gasto = (9.082 * p) + 658.5
+                else:
+                        gasto = (11.711 * p) + 587.7
 
-    elif escolha == 3:
-        print('Finalizando... ')
-        exit()
-    else:
-        print('WIP')
-
-if __name__ == '__main__':
-    start()
+        return gasto
