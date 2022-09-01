@@ -1,105 +1,96 @@
 '''
-Projeto Integrador I => Sistema completo
-
-Se não conseguir conectar ao meu banco de dados use "localhost" e crie a seguinte tabela
-
-CREATE TABLE dados_imc(
-    nome_dados varchar2(40),
-    idade_dados integer,
-    sexo_dados varchar(1),
-    peso_dados number,
-    altura_dados number,
-    imc_dados number,
-    gasto_dados number,
-    sum_dados number,
-    data_dados varchar2(10)
-);
+Projeto Integrador I => Calculadora de Consumo de Calorias por refeicao
 '''
 
 import os
-import cx_Oracle
-from funcs.peso import *
-from funcs.imc import *
-from funcs.consumocal import *
-from funcs.gastobasal import *
-from funcs.funcprint import *
-from funcs.insertdb import *
-from funcs.selectdb import *
-from datetime import datetime
 
-os.system('cls')
+def selectAlimento(ref,refeicao):
+    querContinuar = True
+    vetorAlimento = []
 
-print( '=' * 61 )
-print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
-print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
-print( '||                                                         ||' )
-print( '|| Alunos: 22001646 - André Laudares Soares                ||' )
-print( '||         22007283 - Guilherme Ferreira Jorge             ||' )
-print( '||         20195509 - Lucas Muterle                        ||' )
-print( '||         22004817 - Matheus Ribeiro Marafon              ||' )
-print( '||         22005575 - Raul Migliari                        ||' )
-print( '=' * 61 )
-
-input('\nPress Enter to start')
-
-os.system('cls')
-
-def start():
-    print( '=' * 61 )
-    print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
-    print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
-    print( '||                                                         ||' )
-    print( '||             1 - Iniciar Pesquisa                        ||' )
-    print( '||             2 - Verificar Banco de Dados                ||' )
-    print( '||             3 - Sair                                    ||' )
-    print( '=' * 61 )
-
-    escolhaValido = False
-    while not escolhaValido:
-        try:
-            escolha = int(
-                input('\nFavor, digite a escolha: ')
-            )
-            if 0 < escolha > 3 :
-                print('<<<ERRO: Valor inválido>>>')
-            else:
-                escolhaValido = True
-
-        except ValueError:
-            print('<<<ERRO: Valor inválido, use APENAS números>>>')
-    
+    dicAlimentos = {
+        '1':96,'2':48,'3':24,'4':401,'5':387,'6':9,'7':581,'8':606,'9':128,'10':124,'11':166,'12':98,'13':52,'14':77,'15':267,'16':19,'17':49,
+        '18':438,'19':490,'20':443,'21':410,'22':25,'23':9,'24':65,'25':90,'26':417,'27':210,'28':220,'29':570,'30':643,'31':30,'32':370,'33':41,'34':3,
+        '35':540,'36':475,'37':22,'38':406,'39':19,'40':88,'41':406,'42':76,'43':77,'44':159,'45':380,'46':106,'47':51,'48':46,'49':164,'50':362,'51':296,
+        '52':63,'53':120,'54':435,'55':302,'56':168,'57':300,'58':80,'59':72,'60':257,'61':138,'62':30,'63':269,'64':620,'65':268,'66':150,'67':177,'68':240,
+        '69':487,'70':29,'71':300,'72':363,'73':405,'74':140,'75':53,'76':36,'77':145,'78':360,'79':38,'80':13,'81':398,'82':118,'83':15,'84':377,'85':53
+        }
         
-    if escolha == 1:
-        os.system('cls')
-        nome = str(
-            input('Digite seu nome :\t')
-        )
-        vPeso = pesoValor()
-        vAltura = valorAltura()
-        vIMC = valorIMC(vPeso,vAltura)
-        vSexo = valorSexo()
-        vidade = valorIdade()
-        vGasto = gastoEnergetico(vPeso, vidade, vSexo)
-        os.system('cls')
-        vSum = somaRefeicao() 
-        os.system('cls')
-        vData = datetime.today().strftime('%Y-%m-%d')
-        funcPrint(vIMC, vGasto, vSum, nome)
-        insertDados(nome, vidade, vSexo, f'{vPeso:.2f}', f'{vAltura:.2f}', f'{vIMC:.2f}', f'{vGasto:.2f}', f'{vSum:.2f}', vData)
-        os.system('cls')
-        start()
-    
-    elif escolha == 2:
-        os.system('cls')
-        tabelaDB()
-        os.system('cls')
-        start()
+    print('=' * 140)
+    print(f'| Para a refeição {ref[refeicao]:13}                                                                                                            |')
+    print( '|------------------------------------------------------------------------------------------------------------------------------------------|')
+    print( '| 1- Abacate               | 18- Beterraba             | 35- Chocolate Ao Leite    | 52- Maca                  | 69-  Pacoca               |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 2- Abacaxi               | 19- Biscoito Polvilho     | 36- Chocolate Meio Amargo | 53- Macarrao              | 70- Palmito               |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 3- Abobrinha             | 20- Bolacha Maisena       | 37- Coco                  | 54- Macarrao Instantaneo  | 71- Pao Branco            |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 4- Achocolatado          | 21- Bolo Chocolate        | 38- Coco Cru              | 55- Maionese              | 72- Pao De Queijo         |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 5- Acucar                | 22- Brocolis              | 39- Couve Flor            | 56- Mamao                 | 73- Pastel                |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 6- Alface                | 23- Cafe                  | 40- Ervilha               | 57- Mandioca              | 74- Peixe                 |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 7- Amendoa Torrada       | 24- Caldo De Cana         | 41- Farofa                | 58- Mandioquinha          | 75- Pera                  |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 8- Amendoim Torrado      | 25- Camarao               | 42- Feijao                | 59- Manga                 | 76- Pessego               |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 9- Arroz                 | 26- Capuccino             | 43- Feijao Preto          | 60- Mel                   | 77- Presunto              |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 10- Arroz Integral       | 27- Carne Suina           | 44- Frango                | 61- Milho                 | 78- Queijo                |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 11- Azeitona             | 28- Carne Vermelha        | 45- Gelatina              | 62- Morango               | 79- Refrigerante          |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 12- Banana               | 29- Castanha-De-Caju      | 46- Geleia                | 63- Mortadela             | 80- Rucula                |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 13- Batata Frita         | 30- Castanha-Do-Brasil    | 47- Iogurte               | 64- Noz                   | 81- Salame                |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 14- Batata               | 31- Cenoura               | 48- Laranja               | 65- Omelete               | 82- Sushi                 |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 15- Batata Doce          | 32- Cereais               | 49- Lasanha               | 66- Ovo                   | 83- Tomate                |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 16- Batata Frita         | 33- Cerveja               | 50- Leite                 | 67- Ovo De Codorna        | 84- Torrada               |')
+    print( '|--------------------------+---------------------------+---------------------------+---------------------------+---------------------------|')
+    print( '| 17- Berinjela            | 34- Cha                   | 51- Linguica              | 68- Ovo Frito             | 85- Uva                   |')
+    print( '|------------------------------------------------------------------------------------------------------------------------------------------|')
+    print( '| Press 0 para ir ao próximo                                                                                                               |')
+    print('=' * 140)
 
-    elif escolha == 3:
-        print('Finalizando... ')
-        exit()
-    else:
-        print('WIP')
+    while querContinuar:
+        codAlimento = input('\nDigite um número correspondente ao alimento ingerido (ex: 42): ')
 
-if __name__ == '__main__':
-    start()
+        if codAlimento == '0':
+            sumAlimento = sum(vetorAlimento)
+            querContinuar = False
+        
+        else:
+            quantValida = False
+            while not quantValida:
+                try:
+                    quantAlimento = float(input('Digite, em gramas, quanto ingeriu deste alimento (ex: 1234.56): '))
+                    if quantAlimento <= 0:
+                        print('<<<ERRO: Valor inválido, use APENAS números positivos>>>')
+                    else:
+                        valorAlimento = (dicAlimentos.get(f'{codAlimento}')/100)*quantAlimento
+                        vetorAlimento.append(valorAlimento)
+                        quantValida = True
+                except ValueError:
+                    print('<<<ERRO: Valor inválido, use APENAS números>>>')
+                except TypeError:
+                    print('<<<ERRO: Número de alimento inválido, tente de 0-85>>>')
+                    quantValida = True
+
+    return sumAlimento
+
+def somaRefeicao():
+    vetorTotal = []
+    ref = ['café da manhã','almoço','café da tarde','janta','ceia']
+
+    for refeicao in range(len(ref)):
+        sumAlimento = selectAlimento(ref,refeicao)
+        vetorTotal.append(sumAlimento)
+        os.system('cls')
+
+    sumTotal = sum(vetorTotal)
+
+    return sumTotal
