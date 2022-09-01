@@ -1,105 +1,16 @@
-'''
-Projeto Integrador I => Sistema completo
 
-Se não conseguir conectar ao meu banco de dados use "localhost" e crie a seguinte tabela
-
-CREATE TABLE dados_imc(
-    nome_dados varchar2(40),
-    idade_dados integer,
-    sexo_dados varchar(1),
-    peso_dados number,
-    altura_dados number,
-    imc_dados number,
-    gasto_dados number,
-    sum_dados number,
-    data_dados varchar2(10)
-);
-'''
-
-import os
 import cx_Oracle
-from funcs.peso import *
-from funcs.imc import *
-from funcs.consumocal import *
-from funcs.gastobasal import *
-from funcs.funcprint import *
-from funcs.insertdb import *
-from funcs.selectdb import *
-from datetime import datetime
 
-os.system('cls')
+def insertDados(nome_dados, idade_dados, sexo_dados, peso_dados, altura_dados, imc_dados, gasto_dados, sum_dados, data_dados):
+    sql = ('insert into dados_imc(nome_dados, idade_dados, sexo_dados, peso_dados, altura_dados, imc_dados, gasto_dados, sum_dados, data_dados) '
+        'values(:nome_dados,:idade_dados,:sexo_dados,:peso_dados,:altura_dados,:imc_dados,:gasto_dados,:sum_dados,:data_dados)')
 
-print( '=' * 61 )
-print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
-print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
-print( '||                                                         ||' )
-print( '|| Alunos: 22001646 - André Laudares Soares                ||' )
-print( '||         22007283 - Guilherme Ferreira Jorge             ||' )
-print( '||         20195509 - Lucas Muterle                        ||' )
-print( '||         22004817 - Matheus Ribeiro Marafon              ||' )
-print( '||         22005575 - Raul Migliari                        ||' )
-print( '=' * 61 )
+    try:
+        connection = cx_Oracle.connect(user="BDESI12", password="Kjscr10",dsn="ceatudb02/xe")
+        cursor = connection.cursor()
+        cursor.execute(sql, [nome_dados, idade_dados, sexo_dados, peso_dados, altura_dados, imc_dados, gasto_dados, sum_dados, data_dados])
+        connection.commit()
 
-input('\nPress Enter to start')
-
-os.system('cls')
-
-def start():
-    print( '=' * 61 )
-    print( '|| Seja bem vindo ao Projeto Final de Projeto integrador 1 ||' )
-    print( '||        Calculadora de IMC e Ingestão de calorias        ||' )
-    print( '||                                                         ||' )
-    print( '||             1 - Iniciar Pesquisa                        ||' )
-    print( '||             2 - Verificar Banco de Dados                ||' )
-    print( '||             3 - Sair                                    ||' )
-    print( '=' * 61 )
-
-    escolhaValido = False
-    while not escolhaValido:
-        try:
-            escolha = int(
-                input('\nFavor, digite a escolha: ')
-            )
-            if 0 < escolha > 3 :
-                print('<<<ERRO: Valor inválido>>>')
-            else:
-                escolhaValido = True
-
-        except ValueError:
-            print('<<<ERRO: Valor inválido, use APENAS números>>>')
-    
-        
-    if escolha == 1:
-        os.system('cls')
-        nome = str(
-            input('Digite seu nome :\t')
-        )
-        vPeso = pesoValor()
-        vAltura = valorAltura()
-        vIMC = valorIMC(vPeso,vAltura)
-        vSexo = valorSexo()
-        vidade = valorIdade()
-        vGasto = gastoEnergetico(vPeso, vidade, vSexo)
-        os.system('cls')
-        vSum = somaRefeicao() 
-        os.system('cls')
-        vData = datetime.today().strftime('%Y-%m-%d')
-        funcPrint(vIMC, vGasto, vSum, nome)
-        insertDados(nome, vidade, vSexo, f'{vPeso:.2f}', f'{vAltura:.2f}', f'{vIMC:.2f}', f'{vGasto:.2f}', f'{vSum:.2f}', vData)
-        os.system('cls')
-        start()
-    
-    elif escolha == 2:
-        os.system('cls')
-        tabelaDB()
-        os.system('cls')
-        start()
-
-    elif escolha == 3:
-        print('Finalizando... ')
-        exit()
-    else:
-        print('WIP')
-
-if __name__ == '__main__':
-    start()
+    except cx_Oracle.Error as error:
+        print('Error occurred:')
+        print(error)
